@@ -39,6 +39,18 @@ struct Args {
     /// generate option for split-dwarf
     #[arg(long, default_value_t = false)]
     dwarf: bool,
+
+    /// force O3 in RelWithDebInfo mode
+    #[arg(long, default_value_t = true)]
+    fast: bool,
+
+    /// c compiler
+    #[arg(long, default_value = "/usr/bin/cc")]
+    cc: String,
+
+    /// c++ compiler
+    #[arg(long, default_value = "/usr/bin/c++")]
+    cpp: String,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -46,6 +58,10 @@ fn main() -> anyhow::Result<()> {
     let name = args.name.as_str();
     let cppstd = args.cppstd.as_str();
     let cstd = args.cstd.as_str();
+
+    let cc = args.cc.as_str();
+    let cpp = args.cpp.as_str();
+
     std::fs::create_dir(name)?;
 
     let dir = std::path::Path::new(name);
@@ -68,6 +84,7 @@ fn main() -> anyhow::Result<()> {
             undefined => args.undefined,
             tidy => args.tidy,
             dwarf => args.dwarf,
+            fast => args.fast,
         ))?;
         create(fname, content.as_str())?;
     }
@@ -78,7 +95,11 @@ fn main() -> anyhow::Result<()> {
         env.add_template(fname, include_str!("tpl/Makefile"))?;
         let tmpl = env.get_template(fname)?;
 
-        let content = tmpl.render(context!(name => name))?;
+        let content = tmpl.render(context!(
+            name => name,
+            cc => cc,
+            cpp => cpp,
+        ))?;
         create(fname, content.as_str())?;
     }
 
@@ -89,6 +110,26 @@ fn main() -> anyhow::Result<()> {
         let tmpl = env.get_template(fname)?;
 
         let content = tmpl.render(context!(name => "world"))?;
+        create(fname, content.as_str())?;
+    }
+
+    {
+        // clang-format
+        let fname = ".clang-format";
+        env.add_template(fname, include_str!("tpl/.clang-format"))?;
+        let tmpl = env.get_template(fname)?;
+
+        let content = tmpl.render(context!())?;
+        create(fname, content.as_str())?;
+    }
+
+    {
+        // clang-tidy
+        let fname = ".clang-tidy";
+        env.add_template(fname, include_str!("tpl/.clang-tidy"))?;
+        let tmpl = env.get_template(fname)?;
+
+        let content = tmpl.render(context!())?;
         create(fname, content.as_str())?;
     }
 

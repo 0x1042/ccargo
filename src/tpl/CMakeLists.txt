@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.26)
 project({{ name }} LANGUAGES C CXX ASM)
 
-add_compile_options("-Wall -g")
+add_compile_options("-Wall")
+add_compile_options("-g")
 add_compile_options("-fsized-deallocation")
 add_compile_options("-Werror=delete-non-virtual-dtor")
 
+{% if fast %}
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3")
+{% endif %}
 set(CMAKE_C_STANDARD {{ cstd }})
 set(CMAKE_CXX_STANDARD {{ cppstd }})
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

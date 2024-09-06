@@ -8,14 +8,13 @@ TARGET={{ name }}
 PROFILING=--profiling-output ${OUTPUT}/profiling.json --profiling-format=google-trace
 
 config:
-        cmake -B ${OUTPUT} -G Ninja -S . -DCMAKE_TOOLCHAIN_FILE=${VCPKG_PATH} ${PROFILING}
+	cmake -B ${OUTPUT} -G Ninja -S . -DCMAKE_TOOLCHAIN_FILE=${VCPKG_PATH} ${PROFILING}
 
 build: config
-        cmake --build ${OUTPUT}
+	cmake --build ${OUTPUT}
 
 clean:
-        rm -fr ${OUTPUT}
-        rm -fr bazel-*
+	rm -fr ${OUTPUT}
 
 run: build
-        ./${OUTPUT}/${TARGET}
+	./${OUTPUT}/${TARGET}

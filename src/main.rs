@@ -51,6 +51,10 @@ struct Args {
     /// c++ compiler
     #[arg(long, default_value = "/usr/bin/c++")]
     cpp: String,
+
+    /// c++ linker
+    #[arg(long, default_value = "LLD")]
+    linker: String,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -58,6 +62,7 @@ fn main() -> anyhow::Result<()> {
     let name = args.name.as_str();
     let cppstd = args.cppstd.as_str();
     let cstd = args.cstd.as_str();
+    let linker = args.linker.as_str();
 
     let cc = args.cc.as_str();
     let cpp = args.cpp.as_str();
@@ -85,6 +90,7 @@ fn main() -> anyhow::Result<()> {
             tidy => args.tidy,
             dwarf => args.dwarf,
             fast => args.fast,
+            linker => linker,
         ))?;
         create(fname, content.as_str())?;
     }
@@ -107,30 +113,21 @@ fn main() -> anyhow::Result<()> {
         // main.cpp
         let fname = "main.cpp";
         env.add_template(fname, include_str!("tpl/main.cpp"))?;
-        let tmpl = env.get_template(fname)?;
-
-        let content = tmpl.render(context!(name => "world"))?;
-        create(fname, content.as_str())?;
+        create_without_arg(fname, &env)?;
     }
 
     {
         // clang-format
         let fname = ".clang-format";
         env.add_template(fname, include_str!("tpl/.clang-format"))?;
-        let tmpl = env.get_template(fname)?;
-
-        let content = tmpl.render(context!())?;
-        create(fname, content.as_str())?;
+        create_without_arg(fname, &env)?;
     }
 
     {
         // clang-tidy
         let fname = ".clang-tidy";
         env.add_template(fname, include_str!("tpl/.clang-tidy"))?;
-        let tmpl = env.get_template(fname)?;
-
-        let content = tmpl.render(context!())?;
-        create(fname, content.as_str())?;
+        create_without_arg(fname, &env)?;
     }
 
     Ok(())
@@ -140,5 +137,12 @@ fn create(name: &str, content: &str) -> anyhow::Result<()> {
     let mut file = std::fs::File::create(name)?;
     file.write_all(content.as_bytes())?;
     file.flush()?;
+    Ok(())
+}
+
+fn create_without_arg(name: &str, env: &minijinja::Environment) -> anyhow::Result<()> {
+    let tmpl = env.get_template(name)?;
+    let content = tmpl.render(context!())?;
+    create(name, &content)?;
     Ok(())
 }

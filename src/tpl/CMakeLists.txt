@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.29)
 project({{ name }} LANGUAGES C CXX ASM)
 
 add_compile_options("-Wall")
@@ -17,6 +17,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
+set(CMAKE_LINKER_TYPE {{ linker }})
 
 {% if asan %}
 option(ENABLE_SANITIZE "enable address sanitize" OFF)

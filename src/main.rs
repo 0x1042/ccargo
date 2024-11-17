@@ -13,32 +13,8 @@ struct Args {
     cstd: String,
 
     /// cpp stanard
-    #[arg(long, default_value = "20")]
+    #[arg(long, default_value = "23")]
     cppstd: String,
-
-    /// generate option for address sanitize
-    #[arg(long, default_value_t = false)]
-    asan: bool,
-
-    /// generate option for thread sanitize
-    #[arg(long, default_value_t = false)]
-    tsan: bool,
-
-    /// generate option for memory sanitize
-    #[arg(long, default_value_t = false)]
-    memory: bool,
-
-    /// generate option for undefined sanitize
-    #[arg(long, default_value_t = false)]
-    undefined: bool,
-
-    /// generate option for clang-tidy
-    #[arg(long, default_value_t = false)]
-    tidy: bool,
-
-    /// generate option for split-dwarf
-    #[arg(long, default_value_t = false)]
-    dwarf: bool,
 
     /// force O3 in RelWithDebInfo mode
     #[arg(long, default_value_t = true)]
@@ -83,12 +59,6 @@ fn main() -> anyhow::Result<()> {
             name => name,
             cstd => cstd,
             cppstd => cppstd,
-            asan => args.asan,
-            tsan => args.tsan,
-            memory => args.memory,
-            undefined => args.undefined,
-            tidy => args.tidy,
-            dwarf => args.dwarf,
             fast => args.fast,
             linker => linker,
         ))?;
@@ -127,6 +97,26 @@ fn main() -> anyhow::Result<()> {
         // clang-tidy
         let fname = ".clang-tidy";
         env.add_template(fname, include_str!("tpl/.clang-tidy"))?;
+        create_without_arg(fname, &env)?;
+    }
+
+    std::fs::create_dir("cmake")?;
+
+    {
+        let fname = "cmake/clang-tidy.cmake";
+        env.add_template(fname, include_str!("tpl/cmake/clang-tidy.cmake"))?;
+        create_without_arg(fname, &env)?;
+    }
+
+    {
+        let fname = "cmake/sanitizer.cmake";
+        env.add_template(fname, include_str!("tpl/cmake/sanitizer.cmake"))?;
+        create_without_arg(fname, &env)?;
+    }
+
+    {
+        let fname = "cmake/dwarf.cmake";
+        env.add_template(fname, include_str!("tpl/cmake/dwarf.cmake"))?;
         create_without_arg(fname, &env)?;
     }
 

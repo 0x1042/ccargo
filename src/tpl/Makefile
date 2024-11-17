@@ -1,5 +1,3 @@
-CC={{ cc }}
-CXX={{ cpp }}
 Generates=Ninja
 VCPKG_PATH=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake
 OUTPUT=target

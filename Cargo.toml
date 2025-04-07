@@ -6,7 +6,7 @@ version = "0.1.0"
 [dependencies]
 anyhow = "1.0.97"
 clap = { version = "4.5.32", features = ["derive"] }
-minijinja = "2.8.0"
+minijinja = "2.9.0"
 
 [profile.release]
 codegen-units = 1

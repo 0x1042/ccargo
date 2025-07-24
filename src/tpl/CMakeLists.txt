@@ -37,7 +37,7 @@ add_compile_options(-stdlib=libc++)
 add_link_options(-lc++abi)
 
 find_package(Threads REQUIRED)
-add_executable({{ name }} main.cpp)
+add_executable({{ name }} main.cc)
 
 target_link_libraries(
   ${PROJECT_NAME}

@@ -1,0 +1,18 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//app:copts.bzl", "DEFAULT_COPTS", "DEFAULT_LINKOPTS")
+
+alias(
+    name = "compile_commands",
+    actual = "@wolfd_bazel_compile_commands//:generate_compile_commands",
+)
+
+cc_binary(
+    name = "{{ name }}d",
+    srcs = ["main.cc"],
+    copts = DEFAULT_COPTS,
+    linkopts = DEFAULT_LINKOPTS,
+    deps = [
+        # "@asio",
+        # "@spdlog",
+    ],
+)

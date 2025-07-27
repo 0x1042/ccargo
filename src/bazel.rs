@@ -20,6 +20,13 @@ pub fn use_bazel(opt: &Opt) -> anyhow::Result<()> {
     }
 
     {
+        // .bazelrc
+        let fname = "BUILD.bazel";
+        env.add_template(fname, include_str!("tpl/BUILD2.bazel"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
+    {
         let fname = "MODULE.bazel";
         env.add_template(fname, include_str!("tpl/MODULE.bazel"))?;
         let tmpl = env.get_template(fname)?;

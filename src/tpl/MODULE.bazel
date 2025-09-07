@@ -3,9 +3,17 @@ project {{ name }} ! update to latest version from https://registry.bazel.build/
 """
 module(name = "{{ name }}")
 
-bazel_dep(name = "rules_cc", version = "0.1.2")
-bazel_dep(name = "wolfd_bazel_compile_commands", version = "0.5.2")
+bazel_dep(name = "rules_cc", version = "0.2.3")
 bazel_dep(name = "mimalloc", version = "2.2.4")
 bazel_dep(name = "platforms", version = "1.0.0")
-# bazel_dep(name = "asio", version = "1.34.2")
-# bazel_dep(name = "spdlog", version = "1.15.3")
+
+bazel_dep(name = "compilation_database", version = "0.1.1")
+
+git_override(
+    module_name = "compilation_database",
+    remote = "https://github.com/0x1042/compilation_database.git",
+    commit = "4a35de7535b7e88647f222f58f461fa82a3a4e1d",
+)
+
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.host()

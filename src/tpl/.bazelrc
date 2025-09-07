@@ -9,7 +9,6 @@ build:cpp --copt=-O3
 build:cpp --strip=always
 build:cpp --features=thin_lto
 
-
 # .bazelrc
 # Address Sanitizer
 build:asan --copt=-fsanitize=address

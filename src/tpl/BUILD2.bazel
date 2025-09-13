@@ -1,4 +1,4 @@
 alias(
-    name = "compile_commands",
-    actual = "@wolfd_bazel_compile_commands//:generate_compile_commands",
+    name = "cc_gen",
+    actual = "@compilation_database//:compile_commands",
 )

@@ -1,13 +1,15 @@
 build --crosstool_top=@local_llvm//:toolchain
 
+common --verbose_failures
+common --cxxopt=-std=c++20
+common --host_cxxopt=-std=c++20
+
 build:opt --compilation_mode=opt
 build:dbg --compilation_mode=dbg
 
-build:cpp --cxxopt=-std=c++20
-build:cpp --host_cxxopt=-std=c++20
-build:cpp --copt=-O3
-build:cpp --strip=always
-build:cpp --features=thin_lto
+build:opt --copt=-O3
+build:opt --strip=always
+build:opt --features=thin_lto
 
 # .bazelrc
 # Address Sanitizer

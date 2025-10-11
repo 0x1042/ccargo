@@ -69,5 +69,11 @@ pub fn use_cmake(opt: &Opt) -> anyhow::Result<()> {
         common::create_without_arg(fname, &env)?;
     }
 
+    {
+        let fname = "CMakePresets.json";
+        env.add_template(fname, include_str!("tpl/CMakePresets.json"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
     Ok(())
 }

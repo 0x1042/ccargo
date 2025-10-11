@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29)
+cmake_minimum_required(VERSION 4.0)
 project({{ name }} LANGUAGES C CXX ASM)
 
 include(CheckCXXCompilerFlag)

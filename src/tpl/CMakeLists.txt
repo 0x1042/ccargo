@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 4.0)
 project({{ name }} LANGUAGES C CXX ASM)
 
+message(STATUS "--------------------------------------------------------")
+message(STATUS "Configuration Summary")
+message(STATUS "  CMAKE_HOST_SYSTEM_NAME          ${CMAKE_HOST_SYSTEM_NAME}")
+message(STATUS "  CMAKE_HOST_SYSTEM_PROCESSOR     ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+message(STATUS "  CMAKE_BUILD_TYPE                ${CMAKE_BUILD_TYPE}")
+message(STATUS "  CMAKE_C_FLAGS                   ${CMAKE_C_FLAGS}")
+message(STATUS "  CMAKE_CXX_FLAGS                 ${CMAKE_CXX_FLAGS}")
+message(STATUS "  CMAKE_EXE_LINKER_FLAGS          ${CMAKE_EXE_LINKER_FLAGS}")
+message(STATUS "--------------------------------------------------------")
+
 include(CheckCXXCompilerFlag)
 include(CMakeDependentOption)
 include(CheckLanguage)
@@ -14,22 +24,6 @@ add_compile_options("-Wall")
 add_compile_options("-g")
 add_compile_options("-fsized-deallocation")
 add_compile_options("-Werror=delete-non-virtual-dtor")
-
-{% if fast %}
-set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3")
-{% endif %}
-set(CMAKE_C_STANDARD {{ cstd }})
-set(CMAKE_CXX_STANDARD {{ cppstd }})
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_VERBOSE_MAKEFILE on)
-set(CMAKE_BUILD_TYPE RelWithDebInfo)
-set(CMAKE_LINKER_TYPE {{ linker }})
-
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 add_compile_options(-march=native)
 add_compile_options(-stdlib=libc++)

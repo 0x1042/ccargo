@@ -3,10 +3,11 @@ project {{ name }} ! update to latest version from https://registry.bazel.build/
 """
 module(name = "{{ name }}")
 
-bazel_dep(name = "rules_cc", version = "0.2.8")
+bazel_dep(name = "rules_cc", version = "0.2.14")
 bazel_dep(name = "mimalloc", version = "2.2.4")
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_go", version = "0.57.0")
+bazel_dep(name = "rules_go", version = "0.59.0")
+bazel_dep(name = "abseil-cpp", version = "20250814.1")
 
 bazel_dep(name = "compilation_database", version = "0.1.2")
 

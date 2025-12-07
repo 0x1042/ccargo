@@ -22,7 +22,8 @@ ExperimentalAutoDetectBinPacking: true
 UseTab: Never
 TabWidth: 4
 Standard: c++20
-PointerAlignment: Middle
+PointerAlignment: Left
+ReferenceAlignment: Left
 MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
 AllowShortFunctionsOnASingleLine: InlineOnly

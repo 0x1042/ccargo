@@ -1,9 +1,13 @@
 common --enable_platform_specific_config
 common --verbose_failures
 
-build --action_env=CC=/usr/local/opt/llvm@20/bin/clang
-build --action_env=CXX=/usr/local/opt/llvm@20/bin/clang
-build --action_env=LLVM_CONFIG=/usr/local/opt/llvm@20/bin/llvm-config
+build:local --action_env=CC=/usr/local/opt/llvm@20/bin/clang
+build:local --action_env=CXX=/usr/local/opt/llvm@20/bin/clang
+build:local --action_env=LLVM_CONFIG=/usr/local/opt/llvm@20/bin/llvm-config
+build:local --linkopt=-lc++
+build:local --linkopt=-lc++abi
+build:local --linkopt=-lm
+build:local --linkopt=-lpthread
 
 common --cxxopt=-std=c++20
 

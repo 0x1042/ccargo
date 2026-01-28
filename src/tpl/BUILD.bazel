@@ -1,5 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("//app:copts.bzl", "DEFAULT_COPTS", "DEFAULT_LINKOPTS")
+load("//bazel:copts.bzl", "DEFAULT_COPTS","DEFAULT_LINKOPTS")
 
 cc_binary(
     name = "{{ name }}",

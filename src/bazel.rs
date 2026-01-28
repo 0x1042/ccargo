@@ -21,6 +21,13 @@ pub fn use_bazel(opt: &Opt) -> anyhow::Result<()> {
 
     {
         // .bazelrc
+        let fname = ".bazelversion";
+        env.add_template(fname, include_str!("tpl/.bazelversion"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
+    {
+        // .bazelrc
         let fname = "BUILD.bazel";
         env.add_template(fname, include_str!("tpl/BUILD2.bazel"))?;
         common::create_without_arg(fname, &env)?;
@@ -38,10 +45,29 @@ pub fn use_bazel(opt: &Opt) -> anyhow::Result<()> {
     }
 
     std::fs::create_dir("app")?;
+    std::fs::create_dir("bazel")?;
 
     {
-        let fname = "app/copts.bzl";
+        let fname = "bazel/copts.bzl";
         env.add_template(fname, include_str!("tpl/copts.bzl"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
+    {
+        let fname = "bazel/BUILD.bazel";
+        env.add_template(fname, include_str!("tpl/empty.bazel"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
+    {
+        let fname = "bazel/extensions.bzl";
+        env.add_template(fname, include_str!("tpl/extensions.bzl"))?;
+        common::create_without_arg(fname, &env)?;
+    }
+
+    {
+        let fname = "bazel/repositories.bzl";
+        env.add_template(fname, include_str!("tpl/repositories.bzl"))?;
         common::create_without_arg(fname, &env)?;
     }
 
